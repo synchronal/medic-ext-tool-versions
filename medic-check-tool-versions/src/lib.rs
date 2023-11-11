@@ -8,8 +8,8 @@ use std::process::Command;
 pub mod cli;
 
 enum RuntimeManager {
-    ASDF,
-    RTX,
+    Asdf,
+    Rtx,
 }
 
 static RTX_CORE_PLUGINS: [&str; 7] = ["go", "golang", "java", "node", "nodejs", "python", "ruby"];
@@ -17,8 +17,8 @@ static RTX_CORE_PLUGINS: [&str; 7] = ["go", "golang", "java", "node", "nodejs", 
 impl std::fmt::Display for RuntimeManager {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            &RuntimeManager::ASDF => write!(f, "asdf"),
-            &RuntimeManager::RTX => write!(f, "rtx"),
+            RuntimeManager::Asdf => write!(f, "asdf"),
+            RuntimeManager::Rtx => write!(f, "rtx"),
         }
     }
 }
@@ -57,8 +57,8 @@ pub fn package_installed(plugin: String, version: Option<String>) -> CheckResult
 pub fn plugin_installed(plugin: String) -> CheckResult {
     if let Ok(rtm) = installed_runtime_manager() {
         match rtm {
-            RuntimeManager::ASDF => (),
-            RuntimeManager::RTX => {
+            RuntimeManager::Asdf => (),
+            RuntimeManager::Rtx => {
                 if RTX_CORE_PLUGINS.contains(&&*plugin) {
                     return CheckOk;
                 }
@@ -88,14 +88,14 @@ pub fn plugin_installed(plugin: String) -> CheckResult {
 fn installed_runtime_manager() -> Result<RuntimeManager, ()> {
     let which_asdf = Command::new("which").args(["asdf"]).output().unwrap();
     if which_asdf.status.success() {
-        return Ok(RuntimeManager::ASDF);
+        return Ok(RuntimeManager::Asdf);
     }
     let which_rtx = Command::new("which").args(["rtx"]).output().unwrap();
     if which_rtx.status.success() {
-        return Ok(RuntimeManager::RTX);
+        return Ok(RuntimeManager::Rtx);
     }
 
-    Err({})
+    Err(())
 }
 
 fn fail_no_rtm() -> CheckResult {
