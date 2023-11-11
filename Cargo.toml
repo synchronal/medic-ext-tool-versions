@@ -1,0 +1,21 @@
+[workspace]
+
+members = [
+  "medic-check-tool-versions",
+]
+resolver = "1"
+
+[workspace.dependencies]
+clap = { version = "4.1.8", features = ["derive", "cargo", "wrap_help", "env", "unicode" ] }
+indoc = "2.0.1"
+medic-lib = "0.1"
+
+[workspace.package]
+authors = ["Eric Saxby <sax@livinginthepast.org>", "synchonal.dev"]
+description = "Medic extension for .tool-versions"
+edition = "2021"
+homepage = "https://github.com/synchronal"
+license = "MIT"
+readme = "./README.md"
+repository = "https://github.com/synchronal/medic-ext-tool-versions"
+version = "0.1.0"
