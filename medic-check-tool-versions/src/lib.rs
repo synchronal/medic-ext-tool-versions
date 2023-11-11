@@ -12,6 +12,8 @@ enum RuntimeManager {
     RTX,
 }
 
+static RTX_CORE_PLUGINS: [&str; 7] = ["go", "golang", "java", "node", "nodejs", "python", "ruby"];
+
 impl std::fmt::Display for RuntimeManager {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
@@ -54,6 +56,14 @@ pub fn package_installed(plugin: String, version: Option<String>) -> CheckResult
 
 pub fn plugin_installed(plugin: String) -> CheckResult {
     if let Ok(rtm) = installed_runtime_manager() {
+        match rtm {
+            RuntimeManager::ASDF => (),
+            RuntimeManager::RTX => {
+                if RTX_CORE_PLUGINS.contains(&&*plugin) {
+                    return CheckOk;
+                }
+            }
+        }
         let mut command = Command::new(format!("{rtm}"));
         command.args(["plugin", "list"]);
 
