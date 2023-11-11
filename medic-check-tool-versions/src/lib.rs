@@ -86,13 +86,14 @@ pub fn plugin_installed(plugin: String) -> CheckResult {
 }
 
 fn installed_runtime_manager() -> Result<RuntimeManager, ()> {
-    let which_asdf = Command::new("which").args(["asdf"]).output().unwrap();
-    if which_asdf.status.success() {
-        return Ok(RuntimeManager::Asdf);
-    }
     let which_rtx = Command::new("which").args(["rtx"]).output().unwrap();
     if which_rtx.status.success() {
         return Ok(RuntimeManager::Rtx);
+    }
+
+    let which_asdf = Command::new("which").args(["asdf"]).output().unwrap();
+    if which_asdf.status.success() {
+        return Ok(RuntimeManager::Asdf);
     }
 
     Err(())
