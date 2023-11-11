@@ -1,8 +1,6 @@
 [doctor]
 
 checks = [
-  { check = "runtime-manager", command = "plugin-installed", args = { plugin = "rust" } },
-  { check = "runtime-manager", command = "package-installed", args = { plugin = "rust" } },
   { check = "homebrew" },
   { name = "compile", shell = "cargo build --workspace" },
   { check = "rust", command = "crate-installed", args = { name = "cargo-audit" } },
