@@ -1,5 +1,4 @@
 [doctor]
-
 checks = [
   { check = "homebrew" },
   { name = "compile", shell = "cargo build --workspace" },
@@ -10,30 +9,30 @@ checks = [
 ]
 
 [test]
-
 checks = [
   { name = "Check for warnings", shell = "cargo build --workspace --features strict" },
   { step = "rust", command = "test", verbose = true },
 ]
 
 [audit]
-
 checks = [
-  ## allow failure: chrono and time have known potential segfaults
-  { name = "Audit crates", shell = "cargo audit", allow_failure = true, verbose = true },
+  { name = "Audit crates", shell = "cargo audit", verbose = true },
   { check = "rust", command = "format-check" },
   { step = "rust", command = "clippy" },
 ]
 
-[update]
+[outdated]
+checks = [
+  { check = "rust", cd = "medic-check-tool-versions" },
+]
 
+[update]
 steps = [
   { step = "git", command = "pull" },
   { doctor = {} },
 ]
 
 [shipit]
-
 steps = [
   { audit = {} },
   { update = {} },
