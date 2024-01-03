@@ -2,8 +2,8 @@
 
 An extension pack for using [medic](https://github.com/synchronal/medic-rs)
 with runtime managers that support `.tool-versions` files. It supports both
-[asdf](https://asdf-vm.com) and [rtx](http://rtx.pub/), with a preference
-for `rtx` if found in the PATH.
+[asdf](https://asdf-vm.com) and [mise](http://mise.jdx.dev/), with a preference
+for `mise` (or its older version `rtx`) if found in the PATH.
 
 Also see [medic-ext-asdf](https://github.com/synchronal/medic-ext-asdf)
 if a specific runtime version manager is preferred.
@@ -41,7 +41,7 @@ checks = [
 Checks for whether plugins and specific plugin packages are installed
 via the runtime version manager.
 
-All checks do an initial test to find either `rtx` or `asdf`, in that order.
+All checks do an initial test to find `mise`, `rtx`, or `asdf`, in that order.
 
 
 ## plugin installed?

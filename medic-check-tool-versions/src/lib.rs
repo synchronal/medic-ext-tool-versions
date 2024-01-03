@@ -9,6 +9,7 @@ pub mod cli;
 
 enum RuntimeManager {
     Asdf,
+    Mise,
     Rtx,
 }
 
@@ -18,6 +19,7 @@ impl std::fmt::Display for RuntimeManager {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             RuntimeManager::Asdf => write!(f, "asdf"),
+            RuntimeManager::Mise => write!(f, "mise"),
             RuntimeManager::Rtx => write!(f, "rtx"),
         }
     }
@@ -58,6 +60,11 @@ pub fn plugin_installed(plugin: String) -> CheckResult {
     if let Ok(rtm) = installed_runtime_manager() {
         match rtm {
             RuntimeManager::Asdf => (),
+            RuntimeManager::Mise => {
+                if RTX_CORE_PLUGINS.contains(&&*plugin) {
+                    return CheckOk;
+                }
+            }
             RuntimeManager::Rtx => {
                 if RTX_CORE_PLUGINS.contains(&&*plugin) {
                     return CheckOk;
@@ -86,6 +93,11 @@ pub fn plugin_installed(plugin: String) -> CheckResult {
 }
 
 fn installed_runtime_manager() -> Result<RuntimeManager, ()> {
+    let which_mise = Command::new("which").args(["mise"]).output().unwrap();
+    if which_mise.status.success() {
+        return Ok(RuntimeManager::Mise);
+    }
+
     let which_rtx = Command::new("which").args(["rtx"]).output().unwrap();
     if which_rtx.status.success() {
         return Ok(RuntimeManager::Rtx);
@@ -103,7 +115,7 @@ fn fail_no_rtm() -> CheckResult {
     CheckError(
         "Unable to find a runtime manager.".into(),
         None,
-        Some("Neither ASDF nor RTX were found in the current shell".into()),
+        Some("Neither ASDF, nor MISE, nor RTX were found in the current shell".into()),
         None,
     )
 }

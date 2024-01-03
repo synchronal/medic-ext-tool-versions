@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add `mise` to potential runtime version managers, based on upstream rename
+  of `jtx` to `mise`.
 
 ## 0.1.0
 
