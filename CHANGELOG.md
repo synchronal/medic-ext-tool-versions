@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- `mise` includes `erlang` as a core plugin.
+
 ## 0.2.0
 
 - Add `mise` to potential runtime version managers, based on upstream rename

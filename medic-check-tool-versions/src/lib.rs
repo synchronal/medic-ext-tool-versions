@@ -13,7 +13,9 @@ enum RuntimeManager {
     Rtx,
 }
 
-static RTX_CORE_PLUGINS: [&str; 7] = ["go", "golang", "java", "node", "nodejs", "python", "ruby"];
+static RTX_CORE_PLUGINS: [&str; 8] = [
+    "erlang", "go", "golang", "java", "node", "nodejs", "python", "ruby",
+];
 
 impl std::fmt::Display for RuntimeManager {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
