@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.3.0
+
 - `mise` includes `erlang` as a core plugin.
 
 ## 0.2.0
