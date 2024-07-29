@@ -8,7 +8,7 @@ resolver = "1"
 [workspace.dependencies]
 clap = { version = "4.1.8", features = ["derive", "cargo", "wrap_help", "env", "unicode" ] }
 indoc = "2.0.1"
-medic-lib = "0.1"
+medic-lib = "0.2"
 
 [workspace.package]
 authors = ["Eric Saxby <sax@livinginthepast.org>", "synchonal.dev"]
