@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.4.0
+
 - Updated error messages.
 - `plugin-installed` can take multiple plugins by repeating `-p`.
 
