@@ -47,46 +47,63 @@ pub fn package_installed(plugin: String, version: Option<String>) -> CheckResult
             let stdout = std_to_string(output.stdout);
             let stderr = std_to_string(output.stderr);
             CheckError(
-                    format!("Currently configured runtime manager package for {plugin} has not been installed."),
-                    Some(stdout),
-                    Some(stderr),
-                    Some(format!("({remedy:?})").replace('"', "")),
-                )
+                format!("Runtime manager package ({rtm}) is missing installed version: {plugin}."),
+                Some(stdout),
+                Some(stderr),
+                Some(format!("({remedy:?})").replace('"', "")),
+            )
         }
     } else {
         fail_no_rtm()
     }
 }
 
-pub fn plugin_installed(plugin: String) -> CheckResult {
+pub fn plugin_installed(plugins: Vec<String>) -> CheckResult {
     if let Ok(rtm) = installed_runtime_manager() {
-        match rtm {
-            RuntimeManager::Asdf => (),
-            RuntimeManager::Mise => {
-                if RTX_CORE_PLUGINS.contains(&&*plugin) {
-                    return CheckOk;
-                }
-            }
-            RuntimeManager::Rtx => {
-                if RTX_CORE_PLUGINS.contains(&&*plugin) {
-                    return CheckOk;
-                }
-            }
-        }
+        let mut missing: Vec<String> = vec![];
+
         let mut command = Command::new(format!("{rtm}"));
         command.args(["plugin", "list"]);
-
         let list = command.output().unwrap();
         let plugin_list = std_to_string(list.stdout);
-        let plugins: Vec<String> = plugin_list.split('\n').map(str::to_string).collect();
-        if plugins.contains(&plugin) {
+        let installed: Vec<String> = plugin_list.split('\n').map(str::to_string).collect();
+
+        for plugin in plugins {
+            match rtm {
+                RuntimeManager::Asdf => (),
+                RuntimeManager::Mise => {
+                    if RTX_CORE_PLUGINS.contains(&&*plugin) {
+                        continue;
+                    }
+                }
+                RuntimeManager::Rtx => {
+                    if RTX_CORE_PLUGINS.contains(&&*plugin) {
+                        continue;
+                    }
+                }
+            }
+
+            if !installed.contains(&plugin) {
+                missing.push(plugin);
+            }
+        }
+
+        if missing.is_empty() {
             CheckOk
         } else {
+            let remedies: Vec<String> = missing
+                .iter()
+                .map(|plugin| format!("{rtm} plugin install {plugin}"))
+                .collect();
+
             CheckError(
-                format!("Runtime manager plugin {plugin} has not been installed."),
+                format!(
+                    "Runtime manager ({rtm}) is missing plugins: {}.",
+                    missing.join(", ")
+                ),
                 Some(plugin_list),
                 None,
-                Some(format!("{rtm} plugin install {plugin}")),
+                Some(remedies.join(" && ")),
             )
         }
     } else {

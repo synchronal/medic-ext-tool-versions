@@ -36,7 +36,7 @@ pub struct RTMPluginArgs {
     /// Name of an ASDF-compatible plugin.
     #[clap(value_parser)]
     #[arg(short, long, value_hint = clap::ValueHint::CommandString)]
-    pub plugin: String,
+    pub plugin: Vec<String>,
 }
 
 impl Default for CliArgs {

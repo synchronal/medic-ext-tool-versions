@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Updated error messages.
+- `plugin-installed` can take multiple plugins by repeating `-p`.
+
 ## 0.3.0
 
 - `mise` includes `erlang` as a core plugin.
