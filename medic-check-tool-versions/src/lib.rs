@@ -13,7 +13,7 @@ enum RuntimeManager {
     Rtx,
 }
 
-static RTX_CORE_PLUGINS: [&str; 14] = [
+static MISE_CORE_PLUGINS: [&str; 14] = [
     "bun", "deno", "elixir", "erlang", "go", "golang", "java", "node", "nodejs", "python", "ruby",
     "rust", "swift", "zig",
 ];
@@ -73,12 +73,12 @@ pub fn plugin_installed(plugins: Vec<String>) -> CheckResult {
             match rtm {
                 RuntimeManager::Asdf => (),
                 RuntimeManager::Mise => {
-                    if RTX_CORE_PLUGINS.contains(&&*plugin) {
+                    if MISE_CORE_PLUGINS.contains(&&*plugin) {
                         continue;
                     }
                 }
                 RuntimeManager::Rtx => {
-                    if RTX_CORE_PLUGINS.contains(&&*plugin) {
+                    if MISE_CORE_PLUGINS.contains(&&*plugin) {
                         continue;
                     }
                 }
