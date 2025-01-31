@@ -13,8 +13,9 @@ enum RuntimeManager {
     Rtx,
 }
 
-static RTX_CORE_PLUGINS: [&str; 8] = [
-    "erlang", "go", "golang", "java", "node", "nodejs", "python", "ruby",
+static RTX_CORE_PLUGINS: [&str; 14] = [
+    "bun", "deno", "elixir", "erlang", "go", "golang", "java", "node", "nodejs", "python", "ruby",
+    "rust", "swift", "zig",
 ];
 
 impl std::fmt::Display for RuntimeManager {
