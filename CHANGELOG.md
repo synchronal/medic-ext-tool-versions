@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 0.5.0
+
+- Add plugins to the `mise` core plugins list: `bun`, `deno`, `elixir`, `rust`,
+  `swift`, `zig`.
+
 ## 0.4.0
 
 - Updated error messages.
