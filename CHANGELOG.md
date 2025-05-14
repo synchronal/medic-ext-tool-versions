@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.0.1
+
 - Remove extraneous parens from remedy.
 
 ## 1.0.0
