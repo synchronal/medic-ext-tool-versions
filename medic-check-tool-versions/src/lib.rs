@@ -10,7 +10,6 @@ pub mod cli;
 enum RuntimeManager {
     Asdf,
     Mise,
-    Rtx,
 }
 
 static MISE_CORE_PLUGINS: [&str; 14] = [
@@ -23,7 +22,6 @@ impl std::fmt::Display for RuntimeManager {
         match self {
             RuntimeManager::Asdf => write!(f, "asdf"),
             RuntimeManager::Mise => write!(f, "mise"),
-            RuntimeManager::Rtx => write!(f, "rtx"),
         }
     }
 }
@@ -77,11 +75,6 @@ pub fn plugin_installed(plugins: Vec<String>) -> CheckResult {
                         continue;
                     }
                 }
-                RuntimeManager::Rtx => {
-                    if MISE_CORE_PLUGINS.contains(&&*plugin) {
-                        continue;
-                    }
-                }
             }
 
             if !installed.contains(&plugin) {
@@ -118,11 +111,6 @@ fn installed_runtime_manager() -> Result<RuntimeManager, ()> {
         return Ok(RuntimeManager::Mise);
     }
 
-    let which_rtx = Command::new("which").args(["rtx"]).output().unwrap();
-    if which_rtx.status.success() {
-        return Ok(RuntimeManager::Rtx);
-    }
-
     let which_asdf = Command::new("which").args(["asdf"]).output().unwrap();
     if which_asdf.status.success() {
         return Ok(RuntimeManager::Asdf);
@@ -135,7 +123,7 @@ fn fail_no_rtm() -> CheckResult {
     CheckError(
         "Unable to find a runtime manager.".into(),
         None,
-        Some("Neither ASDF, nor MISE, nor RTX were found in the current shell".into()),
+        Some("Neither ASDF nor MISE were found in the current shell".into()),
         None,
     )
 }
