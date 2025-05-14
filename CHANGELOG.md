@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.0.0
+
 - Fix `plugin-installed` remedy for asdf to use `asdf plugin add ...`.
 
 ## 0.5.0
