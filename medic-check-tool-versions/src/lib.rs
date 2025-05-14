@@ -49,7 +49,7 @@ pub fn package_installed(plugin: String, version: Option<String>) -> CheckResult
                 format!("Runtime manager package ({rtm}) is missing installed version: {plugin}."),
                 Some(stdout),
                 Some(stderr),
-                Some(format!("({remedy:?})").replace('"', "")),
+                Some(format!("{remedy:?}").replace('"', "")),
             )
         }
     } else {
