@@ -87,7 +87,10 @@ pub fn plugin_installed(plugins: Vec<String>) -> CheckResult {
         } else {
             let remedies: Vec<String> = missing
                 .iter()
-                .map(|plugin| format!("{rtm} plugin install {plugin}"))
+                .map(|plugin| match rtm {
+                    RuntimeManager::Asdf => format!("{rtm} plugin add {plugin}"),
+                    RuntimeManager::Mise => format!("{rtm} plugin install {plugin}"),
+                })
                 .collect();
 
             CheckError(

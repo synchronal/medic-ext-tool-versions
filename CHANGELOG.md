@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Fix `plugin-installed` remedy for asdf to use `asdf plugin add ...`.
+
 ## 0.5.0
 
 - Add plugins to the `mise` core plugins list: `bun`, `deno`, `elixir`, `rust`,
