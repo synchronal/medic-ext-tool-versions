@@ -3,12 +3,12 @@
 members = [
   "medic-check-tool-versions",
 ]
-resolver = "1"
+resolver = "3"
 
 [workspace.dependencies]
-clap = { version = "4.1.8", features = ["derive", "cargo", "wrap_help", "env", "unicode" ] }
+clap = { version = "4.6", features = ["derive", "cargo", "wrap_help", "env", "unicode" ] }
 indoc = "2.0.1"
-medic-lib = "0.2"
+medic-lib = "0.3"
 
 [workspace.package]
 authors = ["Eric Saxby <sax@livinginthepast.org>", "synchonal.dev"]
